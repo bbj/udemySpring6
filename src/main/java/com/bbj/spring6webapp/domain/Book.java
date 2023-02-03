@@ -2,6 +2,8 @@ package com.bbj.spring6webapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Book {
 
@@ -50,6 +52,37 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", authors=" + authors +
+                '}';
+    }
+
+    /* -------- JPA object equity -----------
+            - JPA ⇒ define equals and hashCode methods
+            - because Hibernate is using them internally to determine object equity
+            - some people just use the id, other the entire class attributes
+            - the right answer really depends on your use case
+            - for this section, we only use id
+            - do: generate equals() and hashCode()
+         */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+
+        return getId() != null ? getId().equals(book.getId()) : book.getId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
     }
 }
 
