@@ -2,8 +2,10 @@ package com.bbj.spring6webapp.boostrap;
 
 import com.bbj.spring6webapp.domain.Author;
 import com.bbj.spring6webapp.domain.Book;
+import com.bbj.spring6webapp.domain.Publisher;
 import com.bbj.spring6webapp.repositories.AuthorRepository;
 import com.bbj.spring6webapp.repositories.BookRepository;
+import com.bbj.spring6webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,15 +14,19 @@ public class BootstrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
     /**
      * Constructor called at startup
      * because @Component => Spring Bean
      * and constructor params are auto-wired for us by Spring
      */
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootstrapData(AuthorRepository authorRepository,
+                         BookRepository bookRepository,
+                         PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     //will be run each time Spring starts
@@ -60,5 +66,12 @@ public class BootstrapData implements CommandLineRunner {
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
+
+        Publisher publisher = new Publisher();
+        publisher.setPublisherName("My Publisher");
+        publisher.setAddress("123 Main");
+        publisherRepository.save(publisher);
+
+        System.out.println("Publisher Count: " + publisherRepository.count());
     }
 }
