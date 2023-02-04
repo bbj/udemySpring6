@@ -17,8 +17,6 @@ public class BookController {
     }
 
     /**
-     *
-     *
      * @param model is a Spring MVC component, injected by Spring at runtime
      * @return the view name
      */
